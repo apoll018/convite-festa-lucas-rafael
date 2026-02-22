@@ -4,9 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Convite Festa de Formatura | Rafael Gonzaga & Lucas Henrique</title>
+    <title>Convite de Formatura | Rafael Gonzaga & Lucas Henrique</title>
     <link href="https://fonts.googleapis.com/css2?family=Monsieur+La+Doulaise&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,36 +18,40 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
 
     <style>
-      body {
-    font-family: 'Inter', sans-serif;
-    background-color: #000000;
-    
-    /* Camada de degradê preto para melhorar o contraste do texto e disfarçar o redimensionamento */
-    background-image: 
-        linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.8)),
-        url("https://lh3.googleusercontent.com/pw/AP1GczO3qC-lqMdVMYr6jbfaF1EJ4zTEbmMU35KGlNB5zVnEkz97UqpL5gwf_J95kjoIBSF2vFrPLmNnBENC3vHmSRQH8Lyadw3ALUUYijLWuVSP9F3o69tLRaPXxzHLdE46UgwmJu1h1kjFEtih76zgbDFRMQ=w425-h599-s-no-gm?authuser=0");
-    
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    
-    /* No celular: a imagem encaixa quase perfeitamente */
-    background-size: cover;
-    background-position: center top;
+        [x-cloak] {
+            display: none !important;
+        }
 
-    overflow-x: hidden;
-}
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000;
 
-/* Ajuste específico para Telas de Computador (Desktop) */
-@media (min-width: 1024px) {
-    body {
-        /* Mantém a proporção sem dar um zoom gigante nos rostos */
-        background-size: contain; 
-        /* Centraliza e fixa no topo para não cortar as cabeças */
-        background-position: center top;
-        /* Garante que o fundo preto preencha onde a imagem não chegar */
-        background-color: #000000;
-    }
-}
+            /* Camada de degradê preto para melhorar o contraste do texto e disfarçar o redimensionamento */
+            background-image:
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.8)),
+                url("assets/background.webp");
+
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+            /* No celular: a imagem encaixa quase perfeitamente */
+            background-size: cover;
+            background-position: center top;
+
+            overflow-x: hidden;
+        }
+
+        /* Ajuste específico para Telas de Computador (Desktop) */
+        @media (min-width: 1024px) {
+            body {
+                /* Mantém a proporção sem dar um zoom gigante nos rostos */
+                background-size: contain;
+                /* Centraliza e fixa no topo para não cortar as cabeças */
+                background-position: center top;
+                /* Garante que o fundo preto preencha onde a imagem não chegar */
+                background-color: #000000;
+            }
+        }
 
         h1,
         h2,
@@ -86,110 +92,197 @@
             transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-    @keyframes fadeUp {
-        0% {
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-up {
             opacity: 0;
-            transform: translateY(30px);
+            animation: fadeUp 1.2s ease forwards;
         }
-        100% {
-            opacity: 1;
-            transform: translateY(0);
+
+        .delay-1 {
+            animation-delay: 0.3s;
         }
-    }
 
-    .fade-up {
-        opacity: 0;
-        animation: fadeUp 1.2s ease forwards;
-    }
+        .delay-2 {
+            animation-delay: 0.6s;
+        }
 
-    .delay-1 { animation-delay: 0.3s; }
-    .delay-2 { animation-delay: 0.6s; }
-    .delay-3 { animation-delay: 0.9s; }
-    .delay-4 { animation-delay: 1.2s; }
+        .delay-3 {
+            animation-delay: 0.9s;
+        }
 
+        .delay-4 {
+            animation-delay: 1.2s;
+        }
+
+        /* FOGOS DE ARTIFICIO (CSS Convertido) */
+        .container-fireworks {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        }
+
+        .container-fireworks>.before,
+        .container-fireworks>.after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            box-shadow: 0 0 #fff;
+            animation: bang 1s ease-out infinite backwards,
+                gravity 1s ease-in infinite backwards,
+                position 5s linear infinite backwards;
+        }
+
+        .container-fireworks>.after {
+            animation-delay: 1.25s, 1.25s, 1.25s;
+            animation-duration: 1.25s, 1.25s, 6.25s;
+        }
+
+        @keyframes bang {
+            to {
+                box-shadow: -120px -150px #ff0044, 50px -200px #00ccff, 120px -100px #ffcc00,
+                    -80px -50px #00ffcc, 150px -150px #ff00ff, -180px -250px #ffffff,
+                    100px -280px #3366ff, -50px -300px #ff3300;
+            }
+        }
+
+        @keyframes gravity {
+            to {
+                transform: translateY(200px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes position {
+
+            0%,
+            19.9% {
+                margin-top: 10%;
+                margin-left: 40%;
+            }
+
+            20%,
+            39.9% {
+                margin-top: 40%;
+                margin-left: 30%;
+            }
+
+            40%,
+            59.9% {
+                margin-top: 20%;
+                margin-left: 70%;
+            }
+
+            60%,
+            79.9% {
+                margin-top: 30%;
+                margin-left: 20%;
+            }
+
+            80%,
+            99.9% {
+                margin-top: 30%;
+                margin-left: 80%;
+            }
+        }
     </style>
 </head>
 
 <body class="bg-black text-gray-200 antialiased">
 
     <div id="splash-screen" class="fixed inset-0 bg-black bg-opacity-98 z-50 flex items-center justify-center p-4 overflow-hidden">
-    <div class="absolute inset-0 opacity-20">
-        <div class="absolute top-0 left-0 w-64 h-64 bg-red-600 rounded-full blur-[120px]"></div>
-        <div class="absolute bottom-0 right-0 w-64 h-64 bg-blue-600 rounded-full blur-[120px]"></div>
+        <div class="absolute inset-0 opacity-20">
+            <div class="absolute top-0 left-0 w-64 h-64 bg-red-600 rounded-full blur-[120px]"></div>
+            <div class="absolute bottom-0 right-0 w-64 h-64 bg-blue-600 rounded-full blur-[120px]"></div>
+        </div>
+
+        <div class="text-center text-white max-w-2xl mx-auto p-4 relative z-10">
+            <div class="flex justify-center items-center space-x-6 mb-8 fade-up delay-1">
+                <svg class="w-16 h-16 text-red-500 drop-shadow-[0_0_10px_rgba(239,68,68,0.5)]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0 0 12 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 0 1-2.031.352 5.988 5.988 0 0 1-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.97Zm-13.5 0c-1.01.143-2.01.317-3 .52m3-.52-2.62 10.726c-.122.499.106 1.028.589 1.202a5.988 5.988 0 0 0 2.031.352 5.988 5.988 0 0 0 2.031-.352c.483-.174.711-.703.59-1.202L5.25 4.97Z" />
+                </svg>
+
+                <div class="h-12 w-[1px] bg-gray-700"></div>
+
+                <svg class="w-16 h-16 text-blue-500 drop-shadow-[0_0_10px_rgba(59,130,246,0.5)]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
+                </svg>
+            </div>
+
+            <h2 class="text-4xl md:text-6xl font-serif font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-blue-400 mb-6 uppercase tracking-tighter fade-up delay-2">
+                Dois Sonhos, Uma Celebração
+            </h2>
+
+            <div class="fade-up delay-3">
+                <p class="mt-6 text-base md:text-xl text-gray-300 leading-relaxed font-light italic">
+                    Entre livros e códigos, prazos e projetos, crescemos, aprendemos e vencemos desafios.
+                </p>
+
+                <p class="mt-4 text-base md:text-xl text-gray-300 leading-relaxed font-light italic">
+                    Hoje celebramos não apenas uma formação, mas a realização de dois sonhos que caminharam lado a lado.
+                </p>
+            </div>
+
+            <div class="fade-up delay-4">
+                <p class="mt-6 text-sm md:text-base text-gray-400 mb-4">
+                    Venha celebrar conosco essa nova etapa.
+                </p>
+
+                <button id="view-invitation-btn" class="relative group overflow-hidden bg-white/5 border border-white/10 text-white font-bold py-4 px-10 rounded-full transition-all duration-500 hover:scale-105 active:scale-95 shadow-2xl">
+                    <span class="relative z-10 transition-colors duration-500 group-hover:text-white">Abrir Convite</span>
+                    <div class="absolute inset-0 bg-gradient-to-r from-red-800 to-blue-800 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                </button>
+            </div>
+        </div>
     </div>
-
-    <div class="text-center text-white max-w-2xl mx-auto p-4 relative z-10">
-        <div class="flex justify-center items-center space-x-6 mb-8 fade-up delay-1">
-            <svg class="w-16 h-16 text-red-500 drop-shadow-[0_0_10px_rgba(239,68,68,0.5)]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0 0 12 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 0 1-2.031.352 5.988 5.988 0 0 1-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.97Zm-13.5 0c-1.01.143-2.01.317-3 .52m3-.52-2.62 10.726c-.122.499.106 1.028.589 1.202a5.988 5.988 0 0 0 2.031.352 5.988 5.988 0 0 0 2.031-.352c.483-.174.711-.703.59-1.202L5.25 4.97Z" />
-            </svg>
-
-            <div class="h-12 w-[1px] bg-gray-700"></div>
-
-            <svg class="w-16 h-16 text-blue-500 drop-shadow-[0_0_10px_rgba(59,130,246,0.5)]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
-            </svg>
-        </div>
-
-        <h2 class="text-4xl md:text-6xl font-serif font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-blue-400 mb-6 uppercase tracking-tighter fade-up delay-2">
-            Dois Sonhos, Uma Celebração
-        </h2>
-
-        <div class="fade-up delay-3">
-            <p class="mt-6 text-base md:text-xl text-gray-300 leading-relaxed font-light italic">
-                Entre livros e códigos, prazos e projetos, crescemos, aprendemos e vencemos desafios.
-            </p>
-
-            <p class="mt-4 text-base md:text-xl text-gray-300 leading-relaxed font-light italic">
-                Hoje celebramos não apenas uma formação, mas a realização de dois sonhos que caminharam lado a lado.
-            </p>
-        </div>
-
-        <div class="fade-up delay-4">
-            <p class="mt-6 text-sm md:text-base text-gray-400 mb-4">
-                Venha celebrar conosco essa nova etapa.
-            </p>
-
-            <button id="view-invitation-btn" class="relative group overflow-hidden bg-white/5 border border-white/10 text-white font-bold py-4 px-10 rounded-full transition-all duration-500 hover:scale-105 active:scale-95 shadow-2xl">
-                <span class="relative z-10 transition-colors duration-500 group-hover:text-white">Abrir Convite</span>
-                <div class="absolute inset-0 bg-gradient-to-r from-red-800 to-blue-800 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            </button>
-        </div>
-    </div>
-</div>
 
     <div id="main-content">
         <div class="container mx-auto p-4 md:p-8 max-w-3xl">
 
-<header class="relative text-center pt-12 pb-6 px-6 fade-in-up flex flex-col items-center justify-center min-h-fit bg-gradient-to-b from-black/90 via-black/40 to-transparent">
+            <header class="relative text-center pt-12 pb-6 px-6 fade-in-up flex flex-col items-center justify-center min-h-fit bg-gradient-to-b from-black/90 via-black/40 to-transparent">
                 <div class="mb-10 md:mb-14 fade-up delay-1">
-                    <img src="https://lh3.googleusercontent.com/pw/AP1GczO_Oy26wQDg1hsDWxvl6nbi7qi60ym29igJdEOChTRzdMSfTuWI30YR4j8euTYP9MtLGNyZo4J-lQZiLYD94X5dSSq-uthlwnLp8xtAs9Nx0umKDBp4Nbf_9nZKMyS1NlVQXnQG3B-6BscZ0WzZhveqTw=w599-h599-s-no-gm?authuser=0" 
-                        alt="Sinergia: Direito e Tecnologia" 
-                        class="w-40 h-40 md:w-64 md:h-64 mx-auto rounded-full object-cover border-none
+                    <img src="assets/logo.webp" alt="Sinergia: Direito e Tecnologia" class="w-40 h-40 md:w-64 md:h-64 mx-auto rounded-full object-cover border-none
                                 [box-shadow:-30px_0_50px_-10px_rgba(239,68,68,0.4),30px_0_50px_-10px_rgba(59,130,246,0.4)]">
                 </div>
 
                 <div class="space-y-2 md:space-y-3 fade-up delay-2">
-    <p class="font-['Playfair_Display'] font-serif text-yellow-500/90 text-xs md:text-sm tracking-[0.5em] mb-6 md:mb-8 uppercase font-medium">
-        • Convite Festa de Formatura •
-    </p>
+                    <p class="font-['Playfair_Display'] font-serif text-yellow-500/90 text-xs md:text-sm tracking-[0.5em] mb-6 md:mb-8 uppercase font-medium">
+                        • Convite Festa de Formatura •
+                    </p>
 
-    <h2 class="text-2xl md:text-5xl font-serif font-bold text-white tracking-widest uppercase 
+                    <h3 class="text-2xl md:text-5xl font-serif font-bold text-white tracking-widest uppercase 
                drop-shadow-[0_0_12px_rgba(239,68,68,0.6)] px-4 leading-tight">
-        Rafael Gonzaga
-    </h2>
+                        Rafael Gonzaga
+                    </h3>
 
-    <div class="flex items-center justify-center space-x-3 my-4 md:my-6">
-        <div class="h-[1px] w-8 md:w-16 bg-gradient-to-r from-transparent to-red-500 opacity-60"></div>
-        <span class="text-xl md:text-3xl text-white/80 font-serif italic">&</span>
-        <div class="h-[1px] w-8 md:w-16 bg-gradient-to-l from-transparent to-blue-500 opacity-60"></div>
-    </div>
+                    <div class="flex items-center justify-center space-x-3 my-4 md:my-6">
+                        <div class="h-[1px] w-8 md:w-16 bg-gradient-to-r from-transparent to-red-500 opacity-60"></div>
+                        <span class="text-xl md:text-3xl text-white/80 font-serif italic">&</span>
+                        <div class="h-[1px] w-8 md:w-16 bg-gradient-to-l from-transparent to-blue-500 opacity-60"></div>
+                    </div>
 
-    <h2 class="text-2xl md:text-5xl font-serif font-bold text-white tracking-widest uppercase 
+                    <h3 class="text-2xl md:text-5xl font-serif font-bold text-white tracking-widest uppercase 
                drop-shadow-[0_0_12px_rgba(59,130,246,0.6)] px-4 leading-tight">
-        Lucas Medeiros
-    </h2>
-</div>
+                        Lucas Medeiros
+                    </h3>
+                </div>
 
                 <div class="w-48 h-[1px] bg-gradient-to-r from-transparent via-yellow-600 to-transparent my-10 opacity-70"></div>
 
@@ -200,57 +293,219 @@
                 </p>
             </header>
             <section id="countdown" class="text-center mt-2 md:mt-4 py-6 fade-in-up">
-</section>
+
+                <h2 class="text-2xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-blue-400 mb-8 uppercase tracking-[0.2em] font-serif">
+                    A Celebração se Aproxima
+                </h2>
+
+                <div id="countdown-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-md mx-auto text-white px-4">
+
+                    <div class="bg-black/40 backdrop-blur-sm p-3 md:p-4 rounded-xl border border-red-800/40">
+                        <div id="days" class="text-3xl md:text-4xl font-bold font-mono text-white">00</div>
+                        <div class="text-[10px] md:text-xs text-red-400 uppercase tracking-widest font-bold">Dias</div>
+                    </div>
+
+                    <div class="bg-black/40 backdrop-blur-sm p-3 md:p-4 rounded-xl border border-red-800/40">
+                        <div id="hours" class="text-3xl md:text-4xl font-bold font-mono text-white">00</div>
+                        <div class="text-[10px] md:text-xs text-red-400 uppercase tracking-widest font-bold">Horas</div>
+                    </div>
+
+                    <div class="bg-black/40 backdrop-blur-sm p-3 md:p-4 rounded-xl border border-blue-800/40">
+                        <div id="minutes" class="text-3xl md:text-4xl font-bold font-mono text-white">00</div>
+                        <div class="text-[10px] md:text-xs text-blue-400 uppercase tracking-widest font-bold">Minutos</div>
+                    </div>
+
+                    <div class="bg-black/40 backdrop-blur-sm p-3 md:p-4 rounded-xl border border-blue-800/40">
+                        <div id="seconds" class="text-3xl md:text-4xl font-bold font-mono text-white">00</div>
+                        <div class="text-[10px] md:text-xs text-blue-400 uppercase tracking-widest font-bold">Segundos</div>
+                    </div>
+
+                </div>
+
+            </section>
 
             <!-- Ajuste na tag MAIN para remover margens excessivas embaixo -->
-<main class="bg-black/30 backdrop-blur-sm p-6 md:p-8 mt-6 md:mt-8 mb-0 rounded-t-lg shadow-2xl border border-red-900/50 fade-in-up" style="transition-delay: 400ms;">
-    <!-- O conteúdo injetado via JS entra aqui -->
-</main>
+            <main class="bg-black/30 backdrop-blur-sm p-6 md:p-8 mt-6 md:mt-8 mb-0 rounded-t-lg shadow-2xl border border-red-900/50 fade-in-up" style="transition-delay: 400ms;">
+                <h3 class="text-3xl md:text-4xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-red-800 to-blue-800 mb-10 font-serif tracking-[0.2em] uppercase drop-shadow-sm">
+                    Detalhes do Evento
+                </h3>
 
-<!-- Ajuste na SECTION para subir e encostar na main -->
-<section class="mt-8 text-center pb-12 pt-8 bg-black/30 backdrop-blur-sm rounded-b-lg border-x border-b border-red-900/50 fade-in-up">
-    <h3 class="text-2xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-blue-400 mb-6 font-serif uppercase tracking-widest">
-        Confirmação de Presença
-    </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-black">
 
-    <p class="text-gray-300 mb-8 max-w-md mx-auto text-base md:text-lg px-6 leading-relaxed font-light">
-        Sua presença tornará este dia ainda mais especial. <br class="hidden md:block">
-        Por favor, <span class="text-white font-semibold border-b-2 border-gradient-to-r from-red-500 to-blue-500">confirme até 10/03/2026.</span>
-    </p> 
-
-    <div class="space-y-8">
-        <p class="text-white text-sm md:text-base font-medium tracking-[0.2em] uppercase opacity-80">
-            <span class="text-red-500">•</span> Convidado não convida <span class="text-blue-500">•</span>
-        </p>
-
-        <button id="rsvpButton"
-            class="relative group overflow-hidden bg-white/5 border border-white/20 text-white font-bold py-4 px-10 md:py-5 md:px-14 rounded-full transition-all duration-500 hover:scale-105 active:scale-95 shadow-2xl">
-            <span class="relative z-10 tracking-widest uppercase text-sm md:text-base">Confirmar Presença</span>
-            
-            <div class="absolute inset-0 bg-gradient-to-r from-red-800 to-blue-800 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-        </button>
-    </div>
-    <p id="rsvpMessage" class="mt-6 text-green-400 text-sm md:text-lg" style="display: none;">
-    Obrigado! Sua presença foi confirmada. Nos vemos na festa!
-    </p>
-</section>
-
-            <section class="mt-4 py-4 fade-in-up" style="transition-delay: 800ms;">
-                <h3 class="text-2xl md:text-3xl font-bold text-white text-center mb-4">Momentos da Jornada</h3>
-                <div id="photo-carousel" class="relative max-w-[350px] md:max-w-[400px] mx-auto overflow-hidden rounded-lg shadow-2xl border border-red-900/50">
-                    <div class="carousel-track flex transition-transform duration-700 ease-in-out">
+                    <div class="flex items-start p-5 bg-white/40 backdrop-blur-md rounded-xl border-l-4 border-red-800 hover:bg-white/60 transition-all duration-500 group shadow-sm">
+                        <div class="p-3 rounded-lg bg-red-800 text-white mr-4 group-hover:rotate-3 transition-transform shadow-md">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-xs uppercase tracking-widest text-red-900 font-bold mb-1">Calendário da Celebração</p>
+                            <p class="text-base md:text-lg font-bold text-black font-serif">Sábado, 21 de Março de 2026</p>
+                            <p class="text-sm text-gray-700 font-medium">Recepção: 21:00h</p>
+                        </div>
                     </div>
-                    <button id="prevBtn" class="absolute top-1/2 left-2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/80 transition-colors z-10">
-                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+
+                    <div class="flex items-start p-5 bg-white/40 backdrop-blur-md rounded-xl border-l-4 border-blue-800 hover:bg-white/60 transition-all duration-500 group shadow-sm">
+                        <div class="p-3 rounded-lg bg-blue-800 text-white mr-4 group-hover:-rotate-3 transition-transform shadow-md">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-xs uppercase tracking-widest text-blue-900 font-bold mb-1">Protocolo de Vestimenta</p>
+                            <p class="text-base md:text-lg font-bold text-black">Esporte Fino ou Casual Elegante</p>
+                            <p class="text-xs text-gray-800 mt-2 font-semibold">
+                                <span class="text-red-700">●</span> Evitar cores: <span class="text-red-700 underline">Vermelho</span> e <span class="text-blue-700 underline">Azul</span>.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-2 flex flex-col items-center p-8 bg-white/30 backdrop-blur-md rounded-xl border border-white/20 text-center group transition-all shadow-[0_0_20px_rgba(0,0,0,0.05)] hover:shadow-[inset_-10px_0_20px_rgba(239,68,68,0.1),inset_10px_0_20px_rgba(59,130,246,0.1)]">
+                        <div class="p-4 rounded-full bg-gradient-to-br from-red-800 to-blue-800 text-white mb-4 shadow-lg">
+                            <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </div>
+                        <p class="text-xs uppercase tracking-[0.3em] text-gray-600 font-bold mb-2">Ponto de Encontro</p>
+                        <p class="text-2xl md:text-3xl font-serif text-black font-bold mb-1">Espaço Rainha Eventos</p>
+                        <p class="text-gray-800 text-sm md:text-base mb-6 font-medium italic opacity-80">Av. Paraguassu, 373 - Rainha do Mar, Xangri-lá - RS</p>
+
+                        <a href="#" onclick="abrirMapa(); return false;" class="inline-flex items-center px-8 py-3 bg-black hover:bg-gray-900 text-white text-sm font-bold rounded-full transition-all duration-300 transform hover:-translate-y-1 shadow-lg tracking-widest uppercase">
+                            Localização no Mapa
+                        </a>
+                    </div>
+
+                    <div class="md:col-span-2 flex flex-col items-center p-8 bg-white/20 rounded-xl border border-dashed border-blue-900/30 text-center shadow-inner relative overflow-hidden">
+                        <div class="p-4 rounded-full bg-blue-900 text-white mb-4 shadow-md z-10">
+                            <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <p class="text-xs uppercase tracking-[0.3em] text-blue-900 font-bold mb-2 z-10">Sugestão de Presente</p>
+                        <p class="text-base md:text-lg text-black font-medium mb-6 z-10 max-w-lg">Para aqueles que desejarem nos presentear, qualquer gesto será recebido com muito carinho, mas caso prefira, e prezando pela praticidade, disponibilizamos a opção de PIX:</p>
+
+                        <button onclick="copyPix()" class="group relative flex items-center px-6 py-4 bg-white/80 rounded-xl border-2 border-blue-800 hover:border-black transition-all cursor-pointer shadow-md z-10">
+                            <span id="pixCode" class="text-blue-900 font-mono text-lg md:text-xl mr-4 tracking-wider font-bold">054.603.640-60</span>
+                            <div class="bg-blue-800 p-2 rounded-lg text-white group-hover:bg-black transition-all">
+                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 002 2h2a2 2 0 002-2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                                </svg>
+                            </div>
+                            <span id="copyTooltip" class="absolute -top-10 left-1/2 -translate-x-1/2 bg-black text-white text-xs py-1 px-3 rounded opacity-0 transition-opacity font-bold">Chave Copiada!</span>
+                        </button>
+                    </div>
+                </div>
+            </main>
+
+            <div x-data="{ open: false, confirmado: false }" @keydown.escape.window="open = false; document.body.style.overflow = 'auto'" @fechar-modal.window="open = false; document.body.style.overflow = 'auto'" @presenca-confirmada.window="confirmado = true">
+
+                <template x-if="confirmado">
+                    <div class="container-fireworks">
+                        <div class="before"></div>
+                        <div class="after"></div>
+                    </div>
+                </template>
+
+                <section class="mt-8 mb-4 text-center pb-12 pt-8 bg-black/30 backdrop-blur-sm rounded-b-lg border-x border-b border-red-900/50 fade-up">
+                    <h3 class="text-2xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-blue-400 mb-6 font-serif uppercase tracking-widest">
+                        Confirmação de Presença
+                    </h3>
+
+                    <p class="text-gray-300 mb-8 max-w-md mx-auto text-base md:text-lg px-6 leading-relaxed font-light">
+                        Sua presença tornará este dia ainda mais especial. <br class="hidden md:block">
+                        Por favor, <span class="text-white font-semibold border-b-2 border-red-500">confirme até 10/03/2026.</span>
+                    </p>
+
+                    <div class="space-y-8">
+                        <p class="text-white text-sm md:text-base font-medium tracking-[0.2em] uppercase opacity-80">
+                            <span class="text-red-500">•</span> Convidado não convida <span class="text-blue-500">•</span>
+                        </p>
+
+                        <button id="rsvpButton" x-show="!confirmado" @click="open = true; document.body.style.overflow = 'hidden'" class="relative group overflow-hidden bg-white/5 border border-white/20 text-white font-bold py-4 px-10 md:py-5 md:px-14 rounded-full transition-all duration-500 hover:scale-105 active:scale-95 shadow-2xl">
+                            <span class="relative z-10 tracking-widest uppercase text-sm md:text-base">Confirmar Presença</span>
+                            <div class="absolute inset-0 bg-gradient-to-r from-red-800 to-blue-800 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        </button>
+
+                        <div x-show="confirmado" x-cloak class="text-emerald-400 font-bold text-xl md:text-2xl animate-bounce">
+                            ✨ Presença Confirmada! Nos vemos lá! ✨
+                        </div>
+                    </div>
+                </section>
+
+                <div x-show="open" x-cloak class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" @click.self="open = false; document.body.style.overflow = 'auto'">
+                    <div class="bg-gray-900 border border-red-900/50 p-6 md:p-8 rounded-2xl shadow-2xl w-full max-w-lg transform transition-all" x-show="open" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="scale-90 opacity-0" x-transition:enter-end="scale-100 opacity-100">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-xl md:text-2xl font-bold text-white font-serif">Confirmar Presença</h3>
+                            <button @click="open = false; document.body.style.overflow = 'auto'" class="text-gray-400 hover:text-white text-3xl">×</button>
+                        </div>
+                        <form id="rsvpForm">
+                            <div class="mb-4 text-left">
+                                <label for="name" class="block text-sm font-medium text-gray-300 mb-2">Seu Nome Completo</label>
+                                <input type="text" id="name" name="name" required class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg p-3 outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            <div class="mb-4 text-left">
+                                <label for="partner" class="block text-sm font-medium text-gray-300 mb-2">Nome do(a) Acompanhante (opcional)</label>
+                                <input type="text" id="partner" name="partner" class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg p-3 outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            <div class="mb-6 text-left">
+                                <label for="children" class="block text-sm font-medium text-gray-300 mb-2">Nomes dos Filhos (se aplicável)</label>
+                                <textarea id="children" name="children" rows="3" placeholder="Ex: João (10 anos)" class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg p-3 outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-gradient-to-r from-red-800 to-blue-800 text-white font-bold py-4 rounded-xl hover:scale-[1.02] transition-transform shadow-lg">
+                                Enviar Confirmação
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <section x-data="{ 
+            activeSlide: 0, 
+            slides: [
+                { src: 'assets/fotojuntosdetoga.webp', alt: 'Rafael e Lucas' },
+                { src: 'assets/togalucas.webp', alt: 'Prova de Toga de Lucas' },
+                { src: 'assets/togarafael.webp', alt: 'Prova de Toga de Rafael' }
+            ],
+            next() { this.activeSlide = (this.activeSlide + 1) % this.slides.length },
+            prev() { this.activeSlide = (this.activeSlide - 1 + this.slides.length) % this.slides.length },
+            init() { setInterval(() => this.next(), 5000) }
+         }" class="mt-4 py-8 fade-up delay-3">
+
+                <h3 class="text-2xl md:text-4xl font-serif font-bold text-center mb-4">
+                    <span class="text-white">Momentos da</span>
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-blue-400"> Jornada</span>
+                </h3>
+
+                <div class="relative max-w-[320px] md:max-w-[450px] mx-auto overflow-hidden rounded-2xl shadow-[-20px_0_50px_-10px_rgba(239,68,68,0.2),20px_0_50px_-10px_rgba(59,130,246,0.2)] border border-white/10">
+
+                    <div class="flex transition-transform duration-700 ease-in-out" :style="'transform: translateX(-' + (activeSlide * 100) + '%)'">
+
+                        <template x-for="slide in slides" :key="slide.src">
+                            <div class="w-full flex-none">
+                                <div class="relative w-full aspect-[2/3] bg-gray-900">
+                                    <img :src="slide.src" :alt="slide.alt" class="absolute inset-0 w-full h-full object-cover opacity-90">
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+
+                    <button @click="prev()" class="absolute top-1/2 left-4 -translate-y-1/2 bg-black/40 backdrop-blur-md text-white p-3 rounded-full hover:bg-red-800/60 transition-all z-10 border border-white/10">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                         </svg>
                     </button>
-                    <button id="nextBtn" class="absolute top-1/2 right-2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/80 transition-colors z-10">
-                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+
+                    <button @click="next()" class="absolute top-1/2 right-4 -translate-y-1/2 bg-black/40 backdrop-blur-md text-white p-3 rounded-full hover:bg-blue-800/60 transition-all z-10 border border-white/10">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                         </svg>
                     </button>
-                    <div id="carousel-dots" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2 z-10">
+
+                    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-3 z-10">
+                        <template x-for="(slide, index) in slides" :key="index">
+                            <button @click="activeSlide = index" class="h-1.5 transition-all duration-300 rounded-full" :class="activeSlide === index ? 'w-8 bg-gradient-to-r from-red-500 to-blue-500' : 'w-2 bg-white/30'"></button>
+                        </template>
                     </div>
                 </div>
             </section>
@@ -264,143 +519,72 @@
         </div>
     </div>
 
-    <div id="rsvpModal" class="modal fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 invisible opacity-0 z-20">
-    </div>
-
     <script>
-
         function abrirMapa() {
-  window.open(
-    "https://maps.app.goo.gl/iSynFSbqixBHuJdN8",
-    "_blank"
-  );
-}
+            window.open(
+                "https://maps.app.goo.gl/iSynFSbqixBHuJdN8",
+                "_blank"
+            );
+        }
 
         function copyPix() {
-    const pixText = document.getElementById("pixCode").innerText.replace(/\D/g, '');
+            const pixText = document.getElementById("pixCode").innerText.replace(/\D/g, '');
 
-    navigator.clipboard.writeText(pixText)
-        .then(() => {
-    const tooltip = document.getElementById('copyTooltip');
-    tooltip.textContent = "Copiado com sucesso!";
-    tooltip.classList.remove('opacity-0');
+            navigator.clipboard.writeText(pixText)
+                .then(() => {
+                    const tooltip = document.getElementById('copyTooltip');
+                    tooltip.textContent = "Copiado com sucesso!";
+                    tooltip.classList.remove('opacity-0');
 
-    setTimeout(() => {
-        tooltip.classList.add('opacity-0');
-        tooltip.textContent = "Copiado!";
-    }, 2000);
-})
-        .catch(() => {
-            alert("Não foi possível copiar automaticamente.");
-        });
-}
+                    setTimeout(() => {
+                        tooltip.classList.add('opacity-0');
+                        tooltip.textContent = "Copiado!";
+                    }, 2000);
+                })
+                .catch(() => {
+                    alert("Não foi possível copiar automaticamente.");
+                });
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
-            
+
             // Injeção de HTML para evitar repetição e facilitar a leitura
-document.getElementById('countdown').innerHTML = `
-    <h2 class="text-2xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-blue-400 mb-8 uppercase tracking-[0.2em] font-serif">
-        A Celebração se Aproxima
-    </h2>
-    
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-md mx-auto text-white px-4">
-        <div class="bg-black/40 backdrop-blur-sm p-3 md:p-4 rounded-xl border border-red-800/40 shadow-[0_0_15px_rgba(239,68,68,0.1)]">
-            <div id="days" class="text-3xl md:text-4xl font-bold font-mono text-white">00</div>
-            <div class="text-[10px] md:text-xs text-red-400 uppercase tracking-widest font-bold">Dias</div>
-        </div>
-        
-        <div class="bg-black/40 backdrop-blur-sm p-3 md:p-4 rounded-xl border border-red-800/40 shadow-[0_0_15px_rgba(239,68,68,0.1)]">
-            <div id="hours" class="text-3xl md:text-4xl font-bold font-mono text-white">00</div>
-            <div class="text-[10px] md:text-xs text-red-400 uppercase tracking-widest font-bold">Horas</div>
-        </div>
-        
-        <div class="bg-black/40 backdrop-blur-sm p-3 md:p-4 rounded-xl border border-blue-800/40 shadow-[0_0_15px_rgba(59,130,246,0.1)]">
-            <div id="minutes" class="text-3xl md:text-4xl font-bold font-mono text-white">00</div>
-            <div class="text-[10px] md:text-xs text-blue-400 uppercase tracking-widest font-bold">Minutos</div>
-        </div>
-        
-        <div class="bg-black/40 backdrop-blur-sm p-3 md:p-4 rounded-xl border border-blue-800/40 shadow-[0_0_15px_rgba(59,130,246,0.1)]">
-            <div id="seconds" class="text-3xl md:text-4xl font-bold font-mono text-white">00</div>
-            <div class="text-[10px] md:text-xs text-blue-400 uppercase tracking-widest font-bold">Segundos</div>
-        </div>
-    </div>
-`;           
+            const countdownDate = new Date("2026-03-21T20:00:00-03:00").getTime();
 
-document.querySelector('main').innerHTML = `
-    <h3 class="text-3xl md:text-4xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-red-800 to-blue-800 mb-10 font-serif tracking-[0.2em] uppercase drop-shadow-sm">
-        Detalhes do Evento
-    </h3>
-    
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-black">
-        
-        <div class="flex items-start p-5 bg-white/40 backdrop-blur-md rounded-xl border-l-4 border-red-800 hover:bg-white/60 transition-all duration-500 group shadow-sm">
-            <div class="p-3 rounded-lg bg-red-800 text-white mr-4 group-hover:rotate-3 transition-transform shadow-md">
-                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-            </div>
-            <div>
-                <p class="text-xs uppercase tracking-widest text-red-900 font-bold mb-1">Calendário da Celebração</p>
-                <p class="text-base md:text-lg font-bold text-black font-serif">Sábado, 21 de Março de 2026</p>
-                <p class="text-sm text-gray-700 font-medium">Recepção: 21:00h</p>
-            </div>
-        </div>
+            const countdownInterval = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = countdownDate - now;
 
-        <div class="flex items-start p-5 bg-white/40 backdrop-blur-md rounded-xl border-l-4 border-blue-800 hover:bg-white/60 transition-all duration-500 group shadow-sm">
-            <div class="p-3 rounded-lg bg-blue-800 text-white mr-4 group-hover:-rotate-3 transition-transform shadow-md">
-                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-            </div>
-            <div>
-                <p class="text-xs uppercase tracking-widest text-blue-900 font-bold mb-1">Protocolo de Vestimenta</p>
-                <p class="text-base md:text-lg font-bold text-black">Esporte Fino ou Casual Elegante</p>
-                <p class="text-xs text-gray-800 mt-2 font-semibold">
-                    <span class="text-red-700">●</span> Evitar cores: <span class="text-red-700 underline">Vermelho</span> e <span class="text-blue-700 underline">Azul</span>.
-                </p>
-            </div>
-        </div>
+                if (distance < 0) {
+                    clearInterval(countdownInterval);
 
-        <div class="md:col-span-2 flex flex-col items-center p-8 bg-white/30 backdrop-blur-md rounded-xl border border-white/20 text-center group transition-all shadow-[0_0_20px_rgba(0,0,0,0.05)] hover:shadow-[inset_-10px_0_20px_rgba(239,68,68,0.1),inset_10px_0_20px_rgba(59,130,246,0.1)]">
-            <div class="p-4 rounded-full bg-gradient-to-br from-red-800 to-blue-800 text-white mb-4 shadow-lg">
-                <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-            </div>
-            <p class="text-xs uppercase tracking-[0.3em] text-gray-600 font-bold mb-2">Ponto de Encontro</p>
-            <p class="text-2xl md:text-3xl font-serif text-black font-bold mb-1">Espaço Rainha Eventos</p>
-            <p class="text-gray-800 text-sm md:text-base mb-6 font-medium italic opacity-80">Av. Paraguassu, 373 - Rainha do Mar, Xangri-lá - RS</p>
-            
-            <a href="#" onclick="abrirMapa(); return false;"
-               class="inline-flex items-center px-8 py-3 bg-black hover:bg-gray-900 text-white text-sm font-bold rounded-full transition-all duration-300 transform hover:-translate-y-1 shadow-lg tracking-widest uppercase">
-                Localização no Mapa
-            </a>
-        </div>
+                    document.getElementById("countdown-grid").innerHTML = "";
+                    document.querySelector("#countdown h2").innerText = "A festa já começou!";
 
-        <div class="md:col-span-2 flex flex-col items-center p-8 bg-white/20 rounded-xl border border-dashed border-blue-900/30 text-center shadow-inner relative overflow-hidden">
-            <div class="p-4 rounded-full bg-blue-900 text-white mb-4 shadow-md z-10">
-                <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-            </div>
-            <p class="text-xs uppercase tracking-[0.3em] text-blue-900 font-bold mb-2 z-10">Sugestão de Presente</p>
-            <p class="text-base md:text-lg text-black font-medium mb-6 z-10 max-w-lg">Para aqueles que desejarem nos presentear, qualquer gesto será recebido com muito carinho, mas caso prefira, e prezando pela praticidade, disponibilizamos a opção de PIX:</p>
-            
-            <button onclick="copyPix()" class="group relative flex items-center px-6 py-4 bg-white/80 rounded-xl border-2 border-blue-800 hover:border-black transition-all cursor-pointer shadow-md z-10">
-                <span id="pixCode" class="text-blue-900 font-mono text-lg md:text-xl mr-4 tracking-wider font-bold">054.603.640-60</span>
-                <div class="bg-blue-800 p-2 rounded-lg text-white group-hover:bg-black transition-all">
-                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 002 2h2a2 2 0 002-2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
-                    </svg>
-                </div>
-                <span id="copyTooltip" class="absolute -top-10 left-1/2 -translate-x-1/2 bg-black text-white text-xs py-1 px-3 rounded opacity-0 transition-opacity font-bold">Chave Copiada!</span>
-            </button>
-        </div>
-    </div>
-`;
-    
-document.getElementById('rsvpModal').innerHTML = `<div class="bg-gray-900 border border-red-900/50 p-6 md:p-8 rounded-lg shadow-2xl w-full max-w-lg transform transition-all scale-95"><div class="flex justify-between items-center mb-6"><h3 class="text-xl md:text-2xl font-bold text-white">Confirmação de Presença</h3><button id="closeModalButton" class="text-gray-400 hover:text-white text-3xl">&times;</button></div><form id="rsvpForm"><div class="mb-4"><label for="name" class="block text-sm font-medium text-gray-300 mb-2">Seu Nome Completo</label><input type="text" id="name" name="name" required class="w-full bg-gray-800 border border-gray-700 text-white rounded-md p-2 focus:ring-red-500 focus:border-red-500"></div><div class="mb-4"><label for="partner" class="block text-sm font-medium text-gray-300 mb-2">Nome do(a) Acompanhante (opcional)</label><input type="text" id="partner" name="partner" class="w-full bg-gray-800 border border-gray-700 text-white rounded-md p-2 focus:ring-red-500 focus:border-red-500"></div><div class="mb-6"><label for="children" class="block text-sm font-medium text-gray-300 mb-2">Nomes dos Filhos (se aplicável)</label><textarea id="children" name="children" rows="3" placeholder="Ex: João (10 anos), Maria (7 anos)" class="w-full bg-gray-800 border border-gray-700 text-white rounded-md p-2 focus:ring-red-500 focus:border-red-500"></textarea></div><button type="submit" class="w-full bg-red-700 text-white font-bold py-3 px-6 rounded-lg hover:bg-red-600 transition-colors text-base">Enviar Confirmação</button></form></div>`;
+                    return;
+                }
+
+                document.getElementById("days").innerText =
+                    Math.floor(distance / (1000 * 60 * 60 * 24))
+                    .toString()
+                    .padStart(2, "0");
+
+                document.getElementById("hours").innerText =
+                    Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+                    .toString()
+                    .padStart(2, "0");
+
+                document.getElementById("minutes").innerText =
+                    Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
+                    .toString()
+                    .padStart(2, "0");
+
+                document.getElementById("seconds").innerText =
+                    Math.floor((distance % (1000 * 60)) / 1000)
+                    .toString()
+                    .padStart(2, "0");
+
+            }, 1000);
 
 
             // Lógica da tela de Intimação
@@ -423,185 +607,64 @@ document.getElementById('rsvpModal').innerHTML = `<div class="bg-gray-900 border
                 }, 100);
             });
 
-            // Contagem Regressiva - DATA ATUALIZADA
-            const countdownDate = new Date("2026-03-21T20:00:00-03:00").getTime();
-            const countdownInterval = setInterval(() => {
-                const now = new Date().getTime();
-                const distance = countdownDate - now;
-                if (distance < 0) {
-                    clearInterval(countdownInterval);
-                    document.getElementById("countdown").innerHTML = "<h2 class='text-xl md:text-3xl font-bold text-red-300'>A festa já começou!</h2>"; // Ajuste para mobile
-                    return;
-                }
-                document.getElementById("days").innerText = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
-                document.getElementById("hours").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-                document.getElementById("minutes").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-                document.getElementById("seconds").innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
-            }, 1000);
+            // 1. URL do seu Google Apps Script (MANTENHA)
+            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbycGqJNdIx77YSYIARwMBUQc5Kf30YFgUFJcuOYPg-KmmhQRkFyYXJkEWmxa8DRVlme/exec";
 
-            // Lógica do Modal
-const rsvpButton = document.getElementById("rsvpButton");
-const rsvpMessage = document.getElementById("rsvpMessage");
-const rsvpMessageConvidado = document.getElementById("rsvpMessageConvidado");
-const rsvpModal = document.getElementById("rsvpModal");
-const modalContentDiv = rsvpModal.querySelector('div');
-const closeModalButton = document.getElementById("closeModalButton");
-const rsvpForm = document.getElementById("rsvpForm");
+            // 2. Seleção dos elementos (Garanta que os IDs existam no seu HTML)
+            const rsvpForm = document.getElementById("rsvpForm");
+            const rsvpButton = document.getElementById("rsvpButton");
+            const rsvpMessage = document.getElementById("rsvpMessage");
 
-const openModal = () => {
-    rsvpModal.classList.remove('invisible', 'opacity-0');
-    modalContentDiv.classList.remove('scale-95');
-    document.body.style.overflowY = 'hidden'; 
-};
+            // 3. Lógica de Envio
+            rsvpForm.addEventListener("submit", (e) => {
+                e.preventDefault();
 
-const closeModal = () => {
-    modalContentDiv.classList.add('scale-95');
-    rsvpModal.classList.add('opacity-0');
-    setTimeout(() => rsvpModal.classList.add('invisible'), 300);
-    document.body.style.overflowY = 'auto'; 
-};
+                const submitBtn = rsvpForm.querySelector('button[type="submit"]');
+                const originalBtnText = submitBtn.innerText;
 
-rsvpButton.addEventListener("click", openModal);
-closeModalButton.addEventListener("click", closeModal);
-rsvpModal.addEventListener('click', (e) => {
-    if (e.target === rsvpModal) closeModal();
-});
+                // Feedback visual de carregamento no botão do modal
+                submitBtn.innerText = "Enviando...";
+                submitBtn.disabled = true;
 
-// URL do Google Apps Script (substitua pela sua URL após implantar)
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzI6bTVAsW3oYvtEvnJ7RtYPouLMnWvx7rZSHPirftyf4eFlS5lFaYpRehufGJjK15rYA/exec"; 
+                const formData = {
+                    name: document.getElementById("name").value,
+                    partner: document.getElementById("partner").value,
+                    children: document.getElementById("children").value
+                };
 
-// Lógica de Envio Única e Consolidada
-rsvpForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    
-    // Estágio de Carregamento no Botão do Modal
-    const submitBtn = rsvpForm.querySelector('button[type="submit"]');
-    const originalBtnText = submitBtn.innerText;
-    submitBtn.innerText = "Enviando...";
-    submitBtn.disabled = true;
+                fetch(SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        cache: 'no-cache',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    })
+                    .then(() => {
+                        // 1. DISPARA OS EVENTOS PARA O ALPINE.JS
+                        // Isso vai fechar o modal, sumir com o botão e ativar os fogos automaticamente
+                        window.dispatchEvent(new CustomEvent('fechar-modal'));
+                        window.dispatchEvent(new CustomEvent('presenca-confirmada'));
 
-    // Coleta dos dados do formulário
-    const formData = {
-        name: document.getElementById("name").value,
-        partner: document.getElementById("partner").value,
-        children: document.getElementById("children").value
-    };
+                        // 2. LIMPA O FORMULÁRIO
+                        const nomeConvidado = formData.name;
+                        rsvpForm.reset();
 
-    // Envio para o Google Sheets via Fetch API
-    fetch(SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors', 
-        cache: 'no-cache',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
-    })
-    .then(() => {
-        // Sucesso no envio
-        closeModal();
-        
-        // Atualiza o botão principal do convite (o que abriu o modal)
-        rsvpButton.innerText = "Presença Confirmada!";
-        rsvpButton.disabled = true;
-        rsvpButton.classList.add("bg-green-600");
-        rsvpButton.classList.remove("bg-red-700", "hover:bg-red-600");
-        
-        // Mostra a mensagem de agradecimento na tela principal
-        rsvpMessage.style.display = "block";
-        rsvpMessageConvidado.style.display = "block";
-        
-        // Limpa o formulário
-        rsvpForm.reset();
-    })
-    .catch(error => {
-        console.error('Erro ao enviar:', error);
-        submitBtn.innerText = "Erro ao enviar. Tente novamente.";
-        submitBtn.disabled = false;
-        setTimeout(() => { submitBtn.innerText = originalBtnText; }, 3000);
-    });
-});
-
-// Lógica do Carrossel de Fotos - COM AUTOPLAY
-            const photos = [{
-                    src: 'https://lh3.googleusercontent.com/pw/AP1GczP1Rolr5EISeauOjHTWJ7K-xAENfeWCcuAUobuTutiApJz9N2ofs8Wb_XbPBUEBw5af5IIkOSbv1DBDqXWzOfRE_HD85EkOwODk-QOgFJGi1OXQs_KBkm_W1OBJZ_UCjklppluBnlaAJ3BS_I3ucv_7VQ=w402-h599-s-no-gm?authuser=0',
-                    alt: 'Rafael e Lucas'
-                },
-                {
-                    src: 'https://lh3.googleusercontent.com/pw/AP1GczNXgiF6RR3rNIYUiOEiR0wPsdH1NpaNTQs5n_5saEDdgAA4wZ-4yrMSrSGAOvmf9JxKvpGMOSU2ZlQJc6U_h25R4PZ9KCo_6m8JVhfLvrpEnLJV5EahSvxqTYmTfngc94zVAlKNNphsFde2srN18mV0yQ=w355-h599-s-no-gm?authuser=0',
-                    alt: 'Lucas e Rafael'
-                },
-                {
-                    src: 'https://lh3.googleusercontent.com/pw/AP1GczO-8DxNScKMTuPkvk83zrIXfnEn9BoASwIdaXCmlHV8PLwZsWWXKqhHQzLReKggrnH59F_v0esqO9orSzYQajcjwLMSh3QiH66AzxDNs6_kDswFuJ5zPjf7PPEoP9XjuRVBlTaNtmOv2pzxT7Ct2cmYEQ=w399-h599-s-no-gm?authuser=0',
-                    alt: 'Rafael e Lucas'
-                }
-            ];
-            const track = document.querySelector('.carousel-track');
-            const dotsContainer = document.getElementById('carousel-dots');
-
-            photos.forEach((photo, index) => {
-    const slide = document.createElement('div');
-    
-    // 1. Mudamos de 'min-w-full' para 'w-full flex-none' para garantir que não vai esticar
-    slide.className = 'w-full flex-none'; 
-
-    // 2. Usamos 'relative' no contêiner e 'absolute inset-0' na imagem
-    slide.innerHTML = `
-        <div class="relative w-full aspect-[2/3] bg-black overflow-hidden">
-            <img 
-                src="${photo.src}" 
-                alt="${photo.alt}" 
-                class="absolute inset-0 w-full h-full object-cover"
-            >
-        </div>
-    `;
-    track.appendChild(slide);
-
-    const dot = document.createElement('button');
-    dot.className = 'w-2 h-2 md:w-3 md:h-3 rounded-full bg-white/40 transition-colors hover:bg-white/60';
-    dotsContainer.appendChild(dot);
-    
-    dot.addEventListener('click', () => {
-        goToSlide(index);
-        resetAutoPlay();
-    });
-});
-            let currentIndex = 0;
-            let autoPlayInterval;
-            const slides = document.querySelectorAll('.carousel-track > div');
-            const dots = dotsContainer.querySelectorAll('button');
-
-            const goToSlide = (index) => {
-                if (index < 0) index = slides.length - 1;
-                if (index >= slides.length) index = 0;
-                track.style.transform = `translateX(-${index * 100}%)`;
-                dots.forEach((dot, i) => {
-                    dot.classList.toggle('bg-white', i === index);
-                    dot.classList.toggle('bg-white/40', i !== index);
-                });
-                currentIndex = index;
-            };
-
-            const startAutoPlay = () => {
-                autoPlayInterval = setInterval(() => goToSlide(currentIndex + 1), 4000);
-            };
-
-            const resetAutoPlay = () => {
-                clearInterval(autoPlayInterval);
-                startAutoPlay();
-            };
-
-            document.getElementById('prevBtn').addEventListener('click', () => {
-                goToSlide(currentIndex - 1);
-                resetAutoPlay();
-            });
-            document.getElementById('nextBtn').addEventListener('click', () => {
-                goToSlide(currentIndex + 1);
-                resetAutoPlay();
+                        // 3. FEEDBACK FINAL
+                        alert("Obrigado, " + nomeConvidado + "! Presença confirmada com sucesso.");
+                    })
+                    .catch(error => {
+                        console.error('Erro ao enviar:', error);
+                        submitBtn.innerText = "Erro ao enviar. Tente novamente.";
+                        submitBtn.disabled = false;
+                        setTimeout(() => {
+                            submitBtn.innerText = originalBtnText;
+                        }, 3000);
+                    });
             });
 
-            goToSlide(0);
-            startAutoPlay();
+
         });
     </script>
 </body>
